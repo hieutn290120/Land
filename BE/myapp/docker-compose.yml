@@ -1,0 +1,38 @@
+version: '3'
+services:
+
+  # The Application
+  app:
+    build:
+      context: ./
+      dockerfile: app.dockerfile
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+
+  # The Web Server
+  web:
+    build:
+      context: ./
+      dockerfile: web.dockerfile
+    working_dir: /var/www
+    volumes_from:
+      - app
+    ports:
+      - 83:80
+
+  # MySql
+  mysql-docker:
+    build: ./docker_images/mysql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: land
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: yourpass
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - 3306:3306
+    volumes:
+      - ./docker_images/mysql/my.cnf:/etc/alternatives/my.cnf
+volumes:
+  dbdata:
