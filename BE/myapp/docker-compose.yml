@@ -31,7 +31,7 @@ services:
       MYSQL_PASSWORD: yourpass
       MYSQL_ROOT_PASSWORD: 123456
     ports:
-      - 3306:3306
+      - 3309:3306
     volumes:
       - ./docker_images/mysql/my.cnf:/etc/alternatives/my.cnf
 volumes:
